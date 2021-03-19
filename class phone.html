@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    function Mobile(battery){
+
+        this.battery = parseInt(battery);
+        this.typing = [];
+        this.received = [];
+        this.sent = [];
+        this.status = false;
+        this.checkOnOff = function(){
+            return this.status;
+        }
+        this.turnOnOff = function(){
+            this.status = !(this.status);
+        }
+        this.getSent = function(){
+            return this.sent;
+            this.battery--;
+        }
+        this.getReceived = function() {
+            return this.received;
+            this.battery--;
+        }
+        this.charge = function () {
+            if (this.battery < 100) {
+                this.battery = 100;
+            }
+        }
+        this.receiveText = function(text){
+            this.received.push(text);
+            this.battery--;
+        }
+        this.sendText = function(text){
+            this.sent.push(text);
+            this.battery--;
+        }
+        this.ready = function(){
+            if (this.battery > 0 && this.status == true){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+    let nokia = new Mobile(0);
+    nokia.charge();
+    nokia.turnOnOff();
+    let iphone = new Mobile(0);
+    iphone.charge();
+    iphone.turnOnOff();
+
+    if (nokia.ready() && iphone.ready()){
+        nokia.sendText('hello');
+        iphone.receiveText('hello');
+        console.log(iphone.getReceived());
+    }
+
+</script>
